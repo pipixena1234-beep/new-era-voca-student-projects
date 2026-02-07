@@ -584,10 +584,65 @@ background-color: var(--bg-accent); /* Your muted green/sand color */
     transform: translateX(-50%) translateY(-5px);
 }
 
-        @media (max-width: 768px) {
-            aside { left: 0; width: 100%; height: auto; position: relative; }
-            .content-wrapper { margin-left: 0; }
-        }
+@media (max-width: 768px) {
+    /* 1. Reset Sidebar to be a Top Bar */
+    aside {
+        width: 100%;
+        height: auto;
+        position: relative; /* Stays at the top of the page */
+        left: 0;
+        padding: 20px;
+        border-right: none;
+        border-bottom: 10px solid #36656B; /* Moves the thick bar to the bottom */
+    }
+
+    aside:hover {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    /* 2. Make the Content Wrapper fill the screen */
+    .content-wrapper {
+        margin-left: 0;
+    }
+
+    /* 3. Adjust Logo and Menu Layout */
+    .logo-container {
+        margin-bottom: 20px;
+    }
+
+    .logo-img {
+        width: 80px; /* Smaller logo for mobile */
+    }
+
+    .nav-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* 4. Fix Gallery for Small Screens */
+    .gallery {
+        grid-template-columns: 1fr; /* One card per row on phones */
+        gap: 20px;
+    }
+
+    /* 5. Header Focus Box (The one we made earlier) */
+    .header-focus-box {
+        width: 100%; /* Make it full width on mobile */
+        border-radius: 0;
+        padding: 20px;
+    }
+
+    /* 6. Section Header Text Size */
+    .section-header h1 {
+        font-size: 1.8rem;
+    }
+
+    /* 7. Hide Robot on Mobile (Optional, prevents overlap) */
+    .walking-track {
+        display: none;
+    }
+}
     </style>
 </head>
 <body>
@@ -1000,3 +1055,4 @@ setInterval(() => {
 </body>
 
 </html>
+
