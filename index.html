@@ -586,20 +586,26 @@ background-color: var(--bg-accent); /* Your muted green/sand color */
 
 @media (max-width: 768px) {
     /* 1. Move Sidebar to the Right */
-    aside {
-        left: 0; /* Remove the left property */
-        right: auto;   /* Anchor to the right */
-        width: 180px; /* Slimmer width for vertical mobile */
-        height: 100vh;
-        padding: 20px 15px;
-        border-right: none;
-        border-left: 8px solid #36656B; /* Thick bar moves to the left side */
-        font-size: 0.8rem;
-        z-index: 2000;
+aside {
+        /* 1. Reset Left and Pin to Right */
+        left: auto; 
+        right: 0;
         
-        /* Optional: Start partially hidden and slide in on hover/touch */
-        transform: translateX(155px); 
-        transition: transform 0.4s ease;
+        width: 200px; /* Adjust width as needed */
+        height: 100vh;
+        position: fixed;
+        padding: 40px 20px;
+        background: var(--deep-teal2);
+        
+        /* 2. The "Tag" Border should be on the LEFT to be seen when closed */
+        border-right: none;
+        border-left: 15px solid #36656B; 
+        
+        /* 3. Hide it to the RIGHT (Positive X) */
+        /* Change this value to hide more or less of the sidebar */
+        transform: translateX(185px); 
+        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        z-index: 2000;
     }
 
     aside:hover {
@@ -1050,6 +1056,7 @@ setInterval(() => {
 </body>
 
 </html>
+
 
 
 
