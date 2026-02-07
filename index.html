@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art & Tech Portfolio | Harmony Theme</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --sidebar-width: 260px;
+            --collapsed-width: 15px;
+            
+            /* HARMONIOUS COLOR PALETTE */
+            --bg-main: #DAD887;           /* Lightest: Main Background */
+            --bg-accent: #75B06F;         /* Muted Sand: Secondary surfaces/Dropdowns */
+            --forest-green: #F0F8A4;      /* Moss Green: Hover states/Accents */
+            --deep-teal: #36656B;
+            --deep-teal2: #75B06F;         /* Deep Teal: Typography & Sidebar */
+             
+            
+            --font-main: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* Layout Structure */
+        html, body {
+            height: 100%;
+            margin: 0;
+            background-color: var(--bg-main);
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--deep-teal);
+            display: flex;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* SIDEBAR - Solid Deep Teal for focus */
+        aside {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: var(--deep-teal2);
+            position: fixed;
+            left: calc(var(--collapsed-width) - var(--sidebar-width));
+            padding: 40px 30px;
+            box-sizing: border-box;
+            z-index: 1000;
+            transition: left 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+            /* ADDED THIS LINE */
+            border-right: 15px solid #36656B;
+        }
+
+        aside:hover {
+            left: 0;
+            box-shadow: 10px 0 30px rgba(54, 101, 107, 0.2);
+        }
+
+        /* BLUR EFFECT */
+        aside:hover ~ .content-wrapper {
+            filter: blur(4px) brightness(0.95);
+            pointer-events: none;
+
+        }
+
+        .logo { 
+            font-weight: bold; font-size: 0.75rem; letter-spacing: 2px; 
+            margin-bottom: 50px; text-transform: uppercase; 
+            color: var(--bg-main); /* Pop against dark sidebar */
+        }
+
+        /* LOGO HEADER INTEGRATION */
+        .logo-container {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-img {
+            width: 120px; /* Adjusted for sidebar width */
+            height: auto;
+            margin-bottom: 15px;
+    /* 1.0 is normal, 0.5 is 50% darker, 0.2 is very dark */
+    filter: brightness(0.7) contrast(1.1); 
+    transition: filter 0.3s ease;
+        }
+
+        .nav-menu { list-style: none; padding: 0; margin: 0; }
+        .nav-item { margin-bottom: 20px; }
+        
+        .nav-link, .dropdown-btn {
+            text-decoration: none;
+            color: #191919;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px 0;
+            transition: 0.3s;
+            border-bottom: 1px solid rgba(218, 216, 135, 0.2);
+        }
+
+        .nav-link:hover, .dropdown-btn:hover { 
+            color: var(--bg-main); 
+            border-bottom: 1px solid var(--forest-green);
+        }
+
+        .dropdown-container {
+            display: none;
+            padding-left: 15px;
+            margin-top: 10px;
+            background: rgba(0, 0, 0, 0.15); 
+            border-radius: 4px;
+        }
+
+        .dropdown-container a {
+            display: block;
+            padding: 8px 10px;
+            font-size: 0.8rem;
+            color: #191919;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .dropdown-container a:hover { color: var(--bg-main); }
+        .show { display: block; }
+
+        /* CONTENT WRAPPER */
+        .content-wrapper {
+            margin-left: var(--collapsed-width);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: filter 0.5s ease;
+        }
+
+        main {
+            flex: 1;
+            padding: 60px 8%;
+        }
+/* Wrapper to create the separate background section */
+.header-bg-wrapper {
+background-color: var(--bg-accent); /* Your muted green/sand color */
+    display: inline-block;             /* CRITICAL: Makes width fit the content */
+    padding: 30px 40px 30px 0;         /* Padding around the text */
+    border-radius: 0 15px 15px 0;      /* Rounded corners on the right side */
+    box-shadow: 5px 5px 15px rgba(54, 101, 107, 0.1);
+    margin-bottom: 40px;               /* Space before the gallery starts */
+}
+/* DECORATED SECTION HEADER */
+        .section-header {
+            position: relative;
+      
+            border-left: 8px solid var(--deep-teal); /* Vertical accent bar */
+            padding-left: 25px;
+        }
+
+        .section-header h1 { 
+            font-size: 3.2rem; 
+            font-weight: 700; 
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+            color: var(--deep-teal);
+            line-height: 1.1;
+            text-transform: capitalize;
+        }
+        
+        .section-header p { 
+            color: #191919; 
+            font-size: 1.1rem;
+            margin-top: 10px;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+
+        /* GALLERY GRID */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        /* CARDS */
+/* Update base card to include a subtle outline */
+.art-card {
+    background: var(--bg-accent);
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(54, 101, 107, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    /* VISIBLE OUTLINE: Matches your deep teal theme */
+    outline: 8px solid rgba(54, 101, 107, 0.3);
+    outline-offset: -2px; 
+}
+
+/* ANIMATED BORDER STATE (When clicked) */
+.art-card.clicked {
+    animation: border-pulse 0.6s ease-out;
+    outline: 4px solid var(--deep-teal);
+    z-index: 10;
+}
+
+/* Keyframes for the "Pulse" effect */
+@keyframes border-pulse {
+    0% {
+        outline: 2px solid var(--forest-green);
+        outline-offset: 0px;
+    }
+    50% {
+        outline: 8px solid var(--deep-teal);
+        outline-offset: 4px;
+    }
+    100% {
+        outline: 4px solid var(--deep-teal);
+        outline-offset: -2px;
+    }
+}
+
+        .art-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(54, 101, 107, 0.2);
+        }
+
+        .art-card img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .art-card:hover img { transform: scale(1.1); }
+
+/* 1. BASE STAR STYLING */
+.art-card::before, .art-card::after,
+.star-particle::before, .star-particle::after {
+    content: '\f005';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    color: var(--forest-green);
+    opacity: 0;
+    z-index: 5;
+    pointer-events: none;
+    filter: drop-shadow(0 0 8px rgba(240, 248, 164, 0.8));
+    transition: opacity 0.3s ease;
+}
+
+/* 2. HOVER STATE: FLICKER & FLOAT (Infinite) */
+.art-card:hover::before, .art-card:hover::after,
+.art-card:hover .star-particle::before, .art-card:hover .star-particle::after {
+    opacity: 1;
+}
+
+.art-card:hover::before { left: 15%; top: 20%; animation: flicker-float 2s infinite ease-in-out; }
+.art-card:hover::after { right: 20%; top: 15%; animation: flicker-float 2.3s infinite ease-in-out; }
+.art-card:hover .star-particle::before { left: 50%; top: 10%; animation: flicker-float 1.8s infinite ease-in-out; }
+.art-card:hover .star-particle::after { right: 40%; top: 30%; animation: flicker-float 2.5s infinite ease-in-out; }
+
+@keyframes flicker-float {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0.8; }
+    50% { transform: translateY(-10px) scale(1.2); opacity: 1; text-shadow: 0 0 15px var(--forest-green); }
+}
+
+/* 3. CLICK STATE: DROP & BOUNCE (Plays Once) */
+.art-card.clicked::before, 
+.art-card.clicked::after,
+.art-card.clicked .star-particle::before, 
+.art-card.clicked .star-particle::after {
+    /* This stops the flicker and starts the drop */
+    animation: drop-bounce 1.2s cubic-bezier(0.47, 0, 0.74, 0.71) forwards !important;
+}
+
+/* Individual delays for the drop so they don't fall as a single block */
+.art-card.clicked::after { animation-delay: 0.1s !important; }
+.art-card.clicked .star-particle::before { animation-delay: 0.2s !important; }
+.art-card.clicked .star-particle::after { animation-delay: 0.05s !important; }
+
+@keyframes drop-bounce {
+    0% { transform: translateY(0); opacity: 1; }
+    45% { transform: translateY(350px); opacity: 1; } /* Hit floor */
+    65% { transform: translateY(280px); opacity: 1; } /* Bounce up */
+    85% { transform: translateY(350px); opacity: 1; } /* Land again */
+    100% { transform: translateY(360px) scale(0); opacity: 0; } /* Disappear */
+}
+        .art-info {
+            position: absolute; bottom: 0; 
+            background: var(--deep-teal); 
+            width: 100%; padding: 20px; text-align: center; box-sizing: border-box;
+            transform: translateY(100%); transition: transform 0.3s ease;
+            border-top: 3px solid var(--forest-green);
+        }
+
+        .art-card:hover .art-info { transform: translateY(0); }
+
+
+        .tag {
+            font-size: 0.75rem; color: var(--forest-green);
+            text-transform: uppercase; font-weight: bold; display: block;
+            margin-bottom: 5px;
+        }
+        
+        .art-info strong { color: var(--bg-main); }
+
+
+        /* FOOTER */
+        footer {
+            background-color: var(--bg-accent);
+            padding: 60px 8%;
+            text-align: center;
+            font-size: 0.85rem;
+            margin-top: 50px;
+
+/* ADD THIS LINE: x-offset, y-offset, blur, spread, color */
+    box-shadow: 0 -15px 30px var(--forest-green);;
+    
+    /* Ensure the shadow sits above the content wrapper */
+    position: relative;
+    z-index: 10;
+    overflow: visible; /* CRITICAL: Allows the boy to be seen above the footer */
+
+        }
+
+
+        .footer-divider {
+            width: 50px; height: 3px;
+            background: var(--deep-teal);
+            margin: 20px auto;
+        }
+
+        footer .social-icons {
+            display: flex; justify-content: center; gap: 30px; margin-top: 25px;
+        }
+
+        footer .social-icons a {
+            color: var(--deep-teal);
+            font-size: 1.5rem;
+            transition: 0.3s;
+        }
+
+        footer .social-icons a:hover {
+            color: var(--forest-green);
+            transform: scale(1.2);
+        }
+
+    /* New styles for the Best Student Work section */
+    .featured-badge {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background:  var(--deep-teal);
+        color: var(--bg-main);
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.65rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        z-index: 10;
+        letter-spacing: 1px;
+        border: 1px solid var(--forest-green);
+    }
+    
+    /* Subtle glow for best work links */
+    .nav-link[onclick*="best-work"]:hover {
+        text-shadow: 0 0 8px var(--forest-green);
+    }
+.year-header {
+    font-size: 1.8rem;
+    color: var(--deep-teal);
+    border-bottom: 2px solid var(--deep-teal);
+    display: inline-block;
+    padding-right: 50px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 300;
+}
+
+/* Optional: Add a small decorative dot after the text */
+.year-header::after {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--forest-green);
+    border-radius: 50%;
+    margin-left: 15px;
+    vertical-align: middle;
+}
+/* The Track is the 'pathway' - keep it simple */
+.walking-track {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    z-index: 1000;
+}
+.flying-robot {
+    cursor: grab;
+    user-select: none;
+    -webkit-user-drag: none;
+    z-index: 9999;
+    /* This ensures it stays on top of the gallery during drag */
+
+}
+
+
+
+.returning {
+    /* This forces the robot to slide back smoothly rather than teleporting */
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+/* Robot Parts */
+.robot-head {
+    width: 30px;
+    height: 20px;
+    background-color: var(--deep-teal);
+    border-radius: 15px 15px 5px 5px;
+    position: relative;
+    border-bottom: 2px solid rgba(0,0,0,0.1);
+}
+
+.eye {
+    position: absolute;
+    width: 18px;
+    height: 4px;
+    background-color: var(--forest-green);
+    top: 8px;
+    left: 6px;
+    border-radius: 2px;
+    box-shadow: 0 0 8px var(--forest-green); /* Glowing visor effect */
+}
+
+
+/* The Body needs to be 'relative' so the thrusters anchor to it */
+.robot-body {
+    width: 35px;
+    height: 25px;
+    background-color: var(--deep-teal);
+    border-radius: 5px 5px 15px 15px;
+    margin-top: 2px;
+    position: relative; /* CRITICAL: The anchor point */
+}
+
+/* Thrusters now look for the 'robot-body' coordinates */
+.thruster {
+    position: absolute;
+    width: 8px;
+    height: 12px;
+    background: linear-gradient(to bottom, var(--deep-teal), var(--forest-green));
+    top: 100%; /* Positions them exactly at the bottom of the body */
+    border-radius: 0 0 5px 5px;
+    animation: engine-flicker 0.1s infinite alternate;
+}
+
+.left-thruster { left: 5px; }
+.right-thruster { right: 5px; }
+
+/* Keep the glow centered under the body */
+.robot-glow {
+    position: absolute;
+    bottom: -15px;
+    width: 40px;
+    height: 10px;
+    background: radial-gradient(ellipse, var(--forest-green), transparent);
+    opacity: 0.6;
+    filter: blur(4px);
+    pointer-events: none;
+}
+/* --- ANIMATIONS --- */
+
+/* 1. Horizontal Flight */
+@keyframes fly-across {
+    0% { left: -100px; transform: scaleX(1); }
+    100% { left: 100%; transform: scaleX(1); }
+}
+
+/* 2. Hovering Up and Down */
+@keyframes hover-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* 3. Thruster Flame Flicker */
+@keyframes engine-flicker {
+    from { height: 10px; opacity: 0.8; }
+    to { height: 14px; opacity: 1; }
+}
+
+/* --- ANIMATIONS --- */
+
+/* 1. Horizontal Flight */
+@keyframes fly-across {
+    0% { left: -100px; transform: scaleX(1); }
+    100% { left: 100%; transform: scaleX(1); }
+}
+
+/* 2. Hovering Up and Down */
+@keyframes hover-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* 3. Thruster Flame Flicker */
+@keyframes engine-flicker {
+    from { height: 10px; opacity: 0.8; }
+    to { height: 14px; opacity: 1; }
+}
+.trail-star {
+    position: absolute;
+    color: var(--forest-green);
+    pointer-events: none;
+    z-index: -1; 
+    font-size: 10px;
+    filter: drop-shadow(0 0 5px var(--forest-green));
+    /* The star lasts 1 second */
+    animation: star-drift 1s linear forwards;
+}
+
+@keyframes star-drift {
+    0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+        opacity: 0.8;
+    }
+    100% {
+        /* This pushes the star away from the robot's current position */
+        transform: translate(-100px, 50px) scale(0) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+/* IMPORTANT: This prevents the robot from cutting off the stars */
+.flying-robot {
+    overflow: visible !important;
+}
+.robot-bubble {
+    position: absolute;
+    bottom: 85px; /* Sits above the head */
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    color: var(--deep-teal);
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    white-space: nowrap;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border: 2px solid var(--deep-teal);
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    z-index: 1002;
+}
+
+/* The little triangle tail of the bubble */
+.robot-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid var(--deep-teal);
+}
+
+/* Show the bubble with a slight float animation */
+.robot-bubble.active {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+        @media (max-width: 768px) {
+            aside { left: 0; width: 100%; height: auto; position: relative; }
+            .content-wrapper { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside>
+        <div class="logo-container">
+            <img class="logo-img" src="vec_logo.png" alt="New Era Institute Logo">
+            <p class="logo">DEPARTMENT OF INNOVATION AND TECHNOLOGY<br>创新科技发展系</p>
+
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="#" class="nav-link" onclick="showSection('home')">Collection / All <br>| 收藏/全部</a>
+            </li>
+
+<li class="nav-item">
+    <a href="#" class="nav-link" style="color: var(--forest-green); font-weight: bold;" onclick="filterByClass('best-work')">
+        Best Student Work <br>| 最佳学生作品 <i class="fa-solid fa-star"></i>
+    </a>
+</li>
+            
+            <li class="nav-item">
+                <button class="dropdown-btn">Showcases <br>| 作品展示 ▾ </button>
+                <div class="dropdown-container">
+                    <a href="#" onclick="filterByClass('ict')">ICT</a>
+                    <a href="#" onclick="filterByClass('hci')">HCI</a>
+                    <a href="#" onclick="filterByClass('java')">Java | OOP Java</a>
+                    <a href="#" onclick="filterByClass('modeling')">Modeling</a>
+                    <a href="#" onclick="filterByClass('animation')">Animation</a>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <button class="dropdown-btn">Archive <br>| 档案   ▾</button>
+                <div class="dropdown-container">
+                    <a href="#" onclick="filterByDate('mar-2025')">March 2025</a>
+                    <a href="#" onclick="filterByDate('july-2025')">July 2025</a>
+                    <a href="#" onclick="filterByDate('nov-2025')">November 2025</a>
+                    <a href="#" onclick="filterByDate('nov-2024')">November 2024</a>
+                </div>
+            </li>
+        </ul>
+    </aside>
+
+    <div class="content-wrapper">
+        <main>
+            <section id="home" class="page-section">
+<div class="header-bg-wrapper">
+	      <div class="section-header">
+    		<h1>Curated Portfolio | 精选作品集 </h1>
+    			<p>Excellence in <span style="color: var(--deep-teal); font-weight: bold;">Vocational & Technical</span> education.</p>
+    			<p> 卓越的<span style="color: var(--deep-teal); font-weight: bold;">职业技术</span>教育</p>
+		</div>
+		</div>
+
+                <h2 class="year-header">Class of 2025 | 2025届作品</h2>
+                <div class="gallery" id="main-gallery">
+
+                    <div class="art-card ict nov-2025" data-date="2025-11" 
+	data-title="ICT Project - Text-Based Game |The Shattered Star__ 破坏的残骸"
+	onclick="window.open('https://theshatteredstar.netlify.app/', '_blank')"
+     	style="cursor: pointer;">                     
+		<div class="star-particle"></div>
+                <img src="nov2025_ICT/cheehong.png" alt="Best Work 1">
+		<div class="featured-badge">FEATURED<i class="fa-solid fa-star"></i></div>
+                        <div class="art-info">
+                            <span class="tag">ALGEN002 (G2) Practical ICT | Nov 2025</span>
+                            <strong>Text-Based Game<br> The Shattered Star | 破坏的残骸</strong>
+                            <br><strong>ANG CHEE HONG</strong> 
+                        </div>
+                    </div>
+
+		<div class="art-card ict nov-2025" data-date="2025-11" data-title="ICT Project - Text-Based Game |《七号》"
+		onclick="window.open('http://chankailun0920.itch.io/hajimi', '_blank')"
+     		style="cursor: pointer;">
+    		 <div class="star-particle"></div>
+   		 	<img src="nov2025_ICT/kailun.png">
+   			<div class="art-info">
+          		<span class="tag">ALGEN002 (G2) Practical ICT | Nov 2025</span>
+                            <strong>Text-Based Game<br>《七号》</strong>
+                            <br><strong>Chan Kai Lun(25B0014)<br>Lee Zhang Hung(25B0015)</strong> 
+    			</div>
+		</div>
+                                  
+                <div class="art-card ict nov-2025" data-date="2025-11" data-title="ICT Project - Text-Based Game |Starfall Realm: Dawn Walker "
+                onclick="window.open('https://jiaojinng0904.github.io/algen002finalproject/', '_blank')">
+                         <div class="star-particle"></div>
+		        <img src="nov2025_ICT/jiaojin.png" alt="Best Work 2">
+                        <div class="art-info">
+  			<span class="tag">ALGEN002 (G2) Practical ICT | Nov 2025</span>
+                            <strong>Text-Based Game<br>Starfall Realm: Dawn Walker </strong>
+                            <br><strong>Ng Jiao Jin(25B0073-SEDXR)</strong> 
+                        </div>
+                    </div>
+                    
+                    <div class="art-card hci nov-2025" data-date="2025-11" data-title="HCI Project - Travel Blog Website "
+                    onclick="window.open('https://leemeileng0218.github.io/HCI-FinalAssignment/index.html', '_blank')">
+                         <div class="star-particle"></div>
+		        <img src="nov2025_HCI/meileng.png" alt="Best Work 3">
+			<div class="featured-badge">FEATURED<i class="fa-solid fa-star"></i></div>
+                        <div class="art-info">
+  			<span class="tag">SEAIR013 HCI | Nov 2025</span>
+                            <strong>HCI Project <br>Travel Blog Website</strong>
+                            <br><strong>LEE MEI LENG</strong> 
+                        </div>
+                    </div>
+                    
+              <div class="art-card hci nov-2025" data-date="2025-11" data-title="HCI Project - Travel Review Website "
+                    onclick="window.open('https://grissom06.github.io/HCI-Final-Project/', '_blank')">
+                         <div class="star-particle"></div>
+		        <img src="nov2025_HCI/grissom.jpg" alt="Best Work 3">
+                        <div class="art-info">
+  			<span class="tag">SEAIR013 HCI | Nov 2025</span>
+                            <strong>HCI Project <br>Travel Blog Website</strong>
+                            <br><strong>Grissom Chin Khai Heng</strong> 
+                        </div>
+                    </div>
+
+            </section>
+        </main>
+
+ <footer>
+<div class="walking-track">
+    <div class="flying-robot" id="draggableRobot" onmousedown="startDrag(event)">
+        <div class="robot-head">
+         <div class="robot-bubble" id="robotBubble">Hello!</div>
+            <div class="eye"></div>
+        </div>
+        <div class="robot-body">
+            <div class="thruster left-thruster"></div>
+            <div class="thruster right-thruster"></div>
+        </div>
+        <div class="robot-glow"></div>
+    </div>
+</div>
+    <div class="copyright">© 2023-2026 Classes | Lim Shin Huei</div>
+    <div class="footer-divider"></div>
+    <div class="social-icons">
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="#"><i class="fa-brands fa-github"></i></a>
+    </div>
+</footer>
+
+    <script>
+        document.querySelectorAll(".dropdown-btn").forEach(button => {
+            button.addEventListener("click", function(e) {
+                e.stopPropagation();
+                const container = this.nextElementSibling;
+                document.querySelectorAll(".dropdown-container").forEach(c => {
+                    if (c !== container) c.classList.remove("show");
+                });
+                container.classList.toggle("show");
+            });
+        });
+// Helper function to sort the gallery: Newest Date -> Alphabetical Title
+function sortGallery() {
+    const gallery = document.getElementById('main-gallery');
+    const cards = Array.from(gallery.querySelectorAll('.art-card'));
+
+    cards.sort((a, b) => {
+        // 1. Sort by Date (YYYY-MM) - Newest First
+        const dateA = a.getAttribute('data-date') || "0000-00";
+        const dateB = b.getAttribute('data-date') || "0000-00";
+        
+        if (dateA !== dateB) {
+            return dateB.localeCompare(dateA); 
+        }
+
+        // 2. If dates match, sort by Title (A-Z)
+        const titleA = (a.getAttribute('data-title') || "").toLowerCase();
+        const titleB = (b.getAttribute('data-title') || "").toLowerCase();
+        return titleA.localeCompare(titleB);
+    });
+
+    // Re-append sorted cards to the gallery
+    cards.forEach(card => gallery.appendChild(card));
+}
+
+// Function for "Collection / All"
+function showSection(id) {
+    const yearHeader = document.querySelector('.year-header');
+    if (yearHeader) {
+        yearHeader.style.display = 'inline-block';
+        yearHeader.innerHTML = `Full Collection | 学生总作品集`; 
+    }
+    
+    document.querySelectorAll('.art-card').forEach(c => c.style.display = 'block');
+    sortGallery(); // Ensure order is correct
+    window.scrollTo(0, 0);
+}
+
+// Function for filtering by category (ICT, Java, etc.)
+function filterByClass(cls) {
+    document.querySelectorAll('.art-card').forEach(c => {
+        c.style.display = c.classList.contains(cls) ? 'block' : 'none';
+    });
+    sortGallery(); // Maintain newest first within results
+}
+
+// Function for filtering by date (Archive)
+function filterByDate(dateClass) {
+    const yearHeader = document.querySelector('.year-header');
+    const year = dateClass.split('-')[1]; 
+    
+    if (yearHeader) {
+        yearHeader.style.display = 'inline-block';
+        yearHeader.innerHTML = `Class of ${year} | ${year}届作品`;
+    }
+
+    document.querySelectorAll('.art-card').forEach(c => {
+        c.style.display = c.classList.contains(dateClass) ? 'block' : 'none';
+    });
+    sortGallery();
+}
+
+// --- INITIALIZE ON LOAD ---
+document.addEventListener('DOMContentLoaded', () => {
+    sortGallery(); // Sort immediately when page opens
+});
+document.querySelectorAll('.art-card').forEach(card => {
+    card.addEventListener('click', function() {
+        // If we click a new card, reset the old one
+        document.querySelectorAll('.art-card').forEach(c => {
+            if (c !== this) c.classList.remove('clicked');
+        });
+
+        // Toggle the clicked class to restart animation
+        if (this.classList.contains('clicked')) {
+            this.classList.remove('clicked');
+            void this.offsetWidth; // Trigger reflow to restart CSS animation
+            this.classList.add('clicked');
+        } else {
+            this.classList.add('clicked');
+        }
+    });
+});
+function showSection(id) {
+    const yearHeader = document.querySelector('.year-header');
+    if (yearHeader) {
+        yearHeader.style.display = 'inline-block';
+        // Changed this to reflect that ALL years are visible
+        yearHeader.innerHTML = `Full Collection | 学生总作品集`; 
+    }
+    
+    document.querySelectorAll('.art-card').forEach(c => c.style.display = 'block');
+    window.scrollTo(0, 0);
+}
+
+function filterByDate(dateClass) {
+    const yearHeader = document.querySelector('.year-header');
+    
+    // Grabs the year from your class (e.g., 'nov-2024' becomes '2024')
+    const year = dateClass.split('-')[1]; 
+    
+    if (yearHeader) {
+        yearHeader.style.display = 'inline-block';
+        yearHeader.innerHTML = `Class of ${year} | ${year}届作品`;
+    }
+
+    document.querySelectorAll('.art-card').forEach(c => {
+        c.style.display = c.classList.contains(dateClass) ? 'block' : 'none';
+    });
+}
+let isDragging = false;
+const robot = document.getElementById('draggableRobot');
+
+function startDrag(e) {
+    isDragging = true;
+    say("Wheee! 🚀"); // He says this when grabbed
+    robot.style.animation = 'none';
+    robot.classList.remove('returning');
+    e.preventDefault();
+    document.addEventListener('mousemove', dragMove);
+    document.addEventListener('mouseup', stopDrag);
+}
+
+function stopDrag() {
+    if (!isDragging) return;
+    isDragging = false;
+    
+    say("Going home..."); // He says this when released
+    
+    document.removeEventListener('mousemove', dragMove);
+    document.removeEventListener('mouseup', stopDrag);
+    robot.classList.add('returning');
+    
+    // ... (rest of your existing return logic)
+}
+
+let lastStarTime = 0;
+
+function dragMove(e) {
+    if (!isDragging) return;
+
+    // Existing dragging logic
+    robot.style.position = 'fixed';
+    const x = e.clientX - 25;
+    const y = e.clientY - 30;
+    robot.style.left = x + 'px';
+    robot.style.top = y + 'px';
+    robot.style.transform = 'rotate(15deg) scale(1.1)';
+
+    // --- NEW: STAR TRAIL LOGIC ---
+    const now = Date.now();
+    if (now - lastStarTime > 50) { // Create a star every 50ms
+        createTrailStar(e.clientX, e.clientY);
+        lastStarTime = now;
+    }
+}
+
+function createTrailStar(x, y) {
+    const star = document.createElement('i');
+    star.className = 'fa-solid fa-star trail-star';
+    
+    // Position the star near the thrusters (offset from the mouse)
+    star.style.left = (x + (Math.random() * 20 - 10)) + 'px';
+    star.style.top = (y + 30) + 'px';
+    
+    // Randomize size slightly for a natural look
+    star.style.fontSize = (Math.random() * 10 + 5) + 'px';
+
+    document.body.appendChild(star);
+
+    // Remove from DOM after animation finishes to keep code clean
+    setTimeout(() => {
+        star.remove();
+    }, 800);
+}
+// This function runs continuously
+setInterval(() => {
+    const robot = document.getElementById('draggableRobot');
+    
+    // Only spawn stars if the robot is actually visible/on screen
+    if (robot && getComputedStyle(robot).display !== 'none') {
+        createFlightStar(robot);
+    }
+}, 150); // Adjust this number for more or fewer stars
+
+function createFlightStar(robot) {
+    const star = document.createElement('i');
+    star.className = 'fa-solid fa-star trail-star';
+    
+    // Add to robot container
+    robot.appendChild(star);
+    
+    // Randomize horizontal start point between the two thrusters
+    const randomX = Math.random() * 25 + 12; // Adjusted for 50px width
+    star.style.left = randomX + 'px';
+    
+    // Spawn at the bottom of the body (approx 45-50px down)
+    star.style.top = '48px'; 
+    
+    // Randomize initial rotation
+    star.style.setProperty('--rot', Math.random() * 360 + 'deg');
+    
+    // Remove from DOM after animation
+    setTimeout(() => {
+        star.remove();
+    }, 1000);
+}
+function stopDrag() {
+    if (!isDragging) return;
+    isDragging = false;
+
+    // Remove the global listeners
+    document.removeEventListener('mousemove', dragMove);
+    document.removeEventListener('mouseup', stopDrag);
+
+    // 4. Start the "Snap Back"
+    robot.classList.add('returning');
+    
+    // Teleport back to the start of the footer track
+    robot.style.position = 'absolute';
+    robot.style.left = '0px'; 
+    robot.style.top = 'auto';
+    robot.style.bottom = '20px';
+    robot.style.transform = 'rotate(0deg) scale(1)';
+
+    // 5. After transition is done, give control back to CSS Keyframes
+    setTimeout(() => {
+        if (!isDragging) {
+            robot.classList.remove('returning');
+            robot.style.animation = 'fly-across 10s linear infinite, hover-bob 1.5s ease-in-out infinite';
+            
+            // Clean up the inline styles so Keyframes work again
+            robot.style.left = '';
+            robot.style.top = '';
+        }
+    }, 800);
+}
+const bubble = document.getElementById('robotBubble');
+const phrases = ["Scanning...", "Beep Boop", "Working hard!", "Class of 2025!", "Innovation!"];
+
+function say(text, duration = 2000) {
+    bubble.innerText = text;
+    bubble.classList.add('active');
+    setTimeout(() => {
+        bubble.classList.remove('active');
+    }, duration);
+}
+
+// Make him talk randomly while flying
+setInterval(() => {
+    if (!isDragging && Math.random() > 0.8) {
+        say(phrases[Math.floor(Math.random() * phrases.length)]);
+    }
+}, 1000);
+    </script>
+</body>
+</html>
