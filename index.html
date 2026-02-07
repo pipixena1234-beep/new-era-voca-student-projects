@@ -585,62 +585,57 @@ background-color: var(--bg-accent); /* Your muted green/sand color */
 }
 
 @media (max-width: 768px) {
-    /* 1. Reset Sidebar to be a Top Bar */
+    /* 1. Move Sidebar to the Right */
     aside {
-        width: 100%;
-        height: auto;
-        position: relative; /* Stays at the top of the page */
-        left: 0;
-        padding: 20px;
+        left: auto; /* Remove the left property */
+        right: 0;   /* Anchor to the right */
+        width: 180px; /* Slimmer width for vertical mobile */
+        height: 100vh;
+        padding: 20px 15px;
         border-right: none;
-        border-bottom: 10px solid #36656B; /* Moves the thick bar to the bottom */
+        border-left: 8px solid #36656B; /* Thick bar moves to the left side */
+        font-size: 0.8rem;
+        z-index: 2000;
+        
+        /* Optional: Start partially hidden and slide in on hover/touch */
+        transform: translateX(155px); 
+        transition: transform 0.4s ease;
     }
 
     aside:hover {
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transform: translateX(0); /* Slides out fully when tapped */
     }
 
-    /* 2. Make the Content Wrapper fill the screen */
+    /* 2. Adjust Content Wrapper */
     .content-wrapper {
         margin-left: 0;
+        margin-right: 25px; /* Leave a small gap for the sidebar 'edge' */
+        width: auto;
     }
 
-    /* 3. Adjust Logo and Menu Layout */
-    .logo-container {
-        margin-bottom: 20px;
-    }
-
+    /* 3. Scale down elements to fit slim sidebar */
     .logo-img {
-        width: 80px; /* Smaller logo for mobile */
+        width: 60px;
+    }
+    
+    .logo {
+        font-size: 0.6rem;
     }
 
-    .nav-menu {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+    .nav-link, .dropdown-btn {
+        font-size: 0.7rem;
+        padding: 10px 0;
     }
 
-    /* 4. Fix Gallery for Small Screens */
+    /* 4. Gallery Adjustments */
     .gallery {
-        grid-template-columns: 1fr; /* One card per row on phones */
-        gap: 20px;
+        grid-template-columns: 1fr; /* Stack cards vertically */
+        padding-right: 10px;
     }
 
-    /* 5. Header Focus Box (The one we made earlier) */
-    .header-focus-box {
-        width: 100%; /* Make it full width on mobile */
-        border-radius: 0;
-        padding: 20px;
-    }
-
-    /* 6. Section Header Text Size */
+    /* 5. Section Header */
     .section-header h1 {
         font-size: 1.8rem;
-    }
-
-    /* 7. Hide Robot on Mobile (Optional, prevents overlap) */
-    .walking-track {
-        display: none;
     }
 }
     </style>
@@ -1055,4 +1050,5 @@ setInterval(() => {
 </body>
 
 </html>
+
 
